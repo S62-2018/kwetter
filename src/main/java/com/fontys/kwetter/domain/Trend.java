@@ -1,10 +1,8 @@
 package com.fontys.kwetter.domain;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -15,5 +13,6 @@ public class Trend implements Serializable {
     @GenericGenerator(name = "uuid", strategy = "uuid4")
     private UUID id;
 
+    @Column
     private String title;
 }
