@@ -1,6 +1,6 @@
 package com.fontys.kwetter.domain;
 
-import org.hibernate.annotations.*;
+import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -8,10 +8,11 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity()
+@UuidGenerator(name = "account_id_gen")
 public class Account implements Serializable {
     @Id
     @Column(name = "account_id")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(generator = "account_id_gen")
     private UUID id;
 
     @Column(unique = true)

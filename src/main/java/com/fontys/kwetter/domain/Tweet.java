@@ -1,17 +1,18 @@
 package com.fontys.kwetter.domain;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
 @Entity()
+@UuidGenerator(name = "tweet_id_gen")
 @NamedQuery(name = "Tweet.allTweets", query = "SELECT t FROM Tweet t")
 public class Tweet implements Serializable {
     @Id
+    @GeneratedValue(generator = "tweet_id_gen")
     @Column(name = "tweet_id")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
     @ManyToOne()

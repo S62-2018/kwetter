@@ -1,6 +1,6 @@
 package com.fontys.kwetter.domain;
 
-import org.hibernate.annotations.*;
+import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -8,10 +8,11 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity()
+@UuidGenerator(name = "trend_id_gen")
 public class Trend implements Serializable {
     @Id
     @Column(name = "trend_id")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(generator = "trend_id_gen")
     private UUID id;
 
     @Column
