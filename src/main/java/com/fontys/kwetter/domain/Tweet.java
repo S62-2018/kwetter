@@ -6,11 +6,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
+@Entity()
+@NamedQuery(name = "Tweet.allTweets", query = "SELECT t FROM Tweet t")
 public class Tweet implements Serializable {
     @Id
     @Column(name = "tweet_id")
-    @GeneratedValue(generator = "hibernate-uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid4")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
     @ManyToOne()
@@ -19,15 +20,15 @@ public class Tweet implements Serializable {
     @Column
     private String content;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "mentionedTweets")
-    @JoinTable(name = "account_tweet_mentions", joinColumns = @JoinColumn(name = "fk_account_id", referencedColumnName = "account_id"), inverseJoinColumns = @JoinColumn(name = "fk_tweet_id", referencedColumnName = "tweet_id"))
+    @ManyToMany()
+    @JoinTable(name = "account_tweet_mentions", joinColumns = @JoinColumn(name = "fk_tweet_id"), inverseJoinColumns = @JoinColumn(name = "fk_account_id"))
     private List<Account> mentions;
 
     @ManyToMany
-    @JoinTable(name = "account_tweet_likes", joinColumns = @JoinColumn(name = "fk_account_id", referencedColumnName = "account_id"), inverseJoinColumns = @JoinColumn(name = "fk_tweet_id", referencedColumnName = "tweet_id"))
+    @JoinTable(name = "account_tweet_likes", joinColumns = @JoinColumn(name = "fk_account_id"), inverseJoinColumns = @JoinColumn(name = "fk_tweet_id"))
     private List<Account> likes;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "account_tweet_trends", joinColumns = @JoinColumn(name = "fk_trend_id", referencedColumnName = "trend_id"), inverseJoinColumns = @JoinColumn(name = "fk_tweet_id", referencedColumnName = "tweet_id"))
+    @ManyToMany()
+    @JoinTable(joinColumns = @JoinColumn(name = "fk_trend_id"), inverseJoinColumns = @JoinColumn(name = "fk_tweet_id"))
     private List<Trend> trends;
 }
