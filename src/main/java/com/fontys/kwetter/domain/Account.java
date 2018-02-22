@@ -1,7 +1,6 @@
 package com.fontys.kwetter.domain;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,7 +30,13 @@ public class Account implements Serializable {
 
     @ManyToMany()
     private List<Account> followers;
-    
+
     @ManyToMany()
     private List<Account> following;
+
+    @ManyToMany(mappedBy = "mentions")
+    private List<Tweet> mentionedTweets;
+
+    @OneToMany(mappedBy = "author")
+    private List<Tweet> tweets;
 }
