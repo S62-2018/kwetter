@@ -3,6 +3,7 @@ package com.fontys.kwetter.domain;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.*;
 
@@ -12,24 +13,25 @@ import java.util.*;
 public class Tweet implements Serializable {
     @Id
     @GeneratedValue(generator = "tweet_id_gen")
-    @Column(name = "tweet_id")
+    @Column
     private UUID id;
 
-    @ManyToOne()
+    @ManyToOne
     private Account author;
 
     @Column
+    @Size(max = 140)
     private String content;
 
     @ManyToMany()
-    @JoinTable(name = "account_tweet_mentions", joinColumns = @JoinColumn(name = "fk_tweet_id"), inverseJoinColumns = @JoinColumn(name = "fk_account_id"))
+    @JoinTable(joinColumns = @JoinColumn(name = "tweet_id"), inverseJoinColumns = @JoinColumn(name = "account_id"))
     private List<Account> mentions;
 
     @ManyToMany
-    @JoinTable(name = "account_tweet_likes", joinColumns = @JoinColumn(name = "fk_account_id"), inverseJoinColumns = @JoinColumn(name = "fk_tweet_id"))
+    @JoinTable(joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "tweet_id"))
     private List<Account> likes;
 
     @ManyToMany()
-    @JoinTable(joinColumns = @JoinColumn(name = "fk_trend_id"), inverseJoinColumns = @JoinColumn(name = "fk_tweet_id"))
+    @JoinTable(joinColumns = @JoinColumn(name = "trend_id"), inverseJoinColumns = @JoinColumn(name = "tweet_id"))
     private List<Trend> trends;
 }

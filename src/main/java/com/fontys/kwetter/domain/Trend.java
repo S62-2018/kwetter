@@ -11,7 +11,7 @@ import java.util.UUID;
 @UuidGenerator(name = "trend_id_gen")
 public class Trend implements Serializable {
     @Id
-    @Column(name = "trend_id")
+    @Column
     @GeneratedValue(generator = "trend_id_gen")
     private UUID id;
 
