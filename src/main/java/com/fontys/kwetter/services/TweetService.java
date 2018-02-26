@@ -13,6 +13,6 @@ public class TweetService {
     private TweetDAO tweetDAO;
 
     public List<Tweet> allTweets() {
-        return this.tweetDAO.getTweets();
+        return this.tweetDAO.getAll();
     }
 }
